@@ -28,7 +28,7 @@ export function requestLog({ write = (line) => console.log(line), enabled = () =
     const started = process.hrtime.bigint();
     res.on('finish', () => {
       if (!enabled()) return;
-      const path = req.originalUrl.split('?')[0].replace(/^\/public\/report\/[^/]+\/?$/i, '/public/report/[redacted]');
+      const path = req.originalUrl.split('?')[0].replace(/^\/+public\/report\/.*$/i, '/public/report/[redacted]');
       write(JSON.stringify({
         t: new Date().toISOString(), id: req.id, method: req.method, path,
         status: res.statusCode, ms: Math.round(Number(process.hrtime.bigint() - started) / 1e4) / 100, user: req.user?.sub ?? null,
