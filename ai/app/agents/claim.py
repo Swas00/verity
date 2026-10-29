@@ -7,9 +7,22 @@ from ..retrieval import Retriever
 # "best" is a claim on its own ("the best coffee") but not inside the compound "best-in-class", which is jargon for ToneGuard.
 # "only" is a claim as an exclusivity statement ("the only roaster"), not as a promo qualifier ("Limited time only", "Online only").
 # Percentages sit outside the \b group: there is no word boundary between "%" and a following space.
+# Four more families of claim need support whatever the product: a health or performance effect ("lowers blood pressure"),
+# a comparison ("twice as strong", "than any other brand", "than the industry average"), a stated duration ("for up to six
+# hours", "for a full year") and a promise of completeness ("everything you need"). They were added in Round 3 after an
+# independent test set (ai/eval/heldout2.json) showed that only the keyword patterns above were being examined.
+_EFFECT = (r"(?:lowers?|reduces?|cures?|prevents?|treats?|boosts?|improves?|increases?|supports?)\s+(?:your\s+|the\s+)?"
+           r"(?:blood pressure|cholesterol|stress|anxiety|focus|energy|memory|metabolism|immunity|immune system|sleep|risk|"
+           r"inflammation|weight|digestion|concentration|mood)")
+_COMPARISON = (r"(?:(?:twice|thrice|double|triple|\d+x|\d+\s?times)\s+as\s+\w+|than\s+(?:any|all|every)\s+(?:other|competitor|rival|brand)\w*|"
+               r"than\s+the\s+(?:regional|industry|market|national|global)\s+average)")
+_DURATION = (r"for\s+(?:up\s+to\s+)?(?:a|an|one|two|three|four|five|six|seven|eight|nine|ten|twelve|\d+)(?:\s+(?:full|entire))?"
+             r"\s+(?:hours?|days?|weeks?|months?|years?)")
+_COMPLETE = r"(?:everything|all\s+(?:the\s+)?\w+(?:\s+\w+)?)\s+you\s+(?:will\s+)?need"
 CLAIM_PATTERNS = re.compile(
     r"\b(best(?![-\u2011])|#1|number one|leading|market-leading|best in class|guarantee[ds]?|proven|the only|one and only|"
-    r"\d+\s?(hours?|days?|farms?)|compostable|sustainable|organic)\b|\d+(\.\d+)?\s?%", re.IGNORECASE)
+    r"\d+\s?(hours?|days?|farms?)|compostable|sustainable|organic)\b|\d+(\.\d+)?\s?%|"
+    rf"\b(?:{_EFFECT}|{_COMPARISON}|{_DURATION}|{_COMPLETE})\b", re.IGNORECASE)
 
 
 def _sentences(text: str):
