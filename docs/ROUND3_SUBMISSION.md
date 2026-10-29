@@ -58,7 +58,7 @@ Also fixed from Round 2: ClaimGuard false positives on "Limited time only" and "
 | Name | Round 3 contribution |
 |---|---|
 | Swastik Sahu | Project lead and integration; Round 3 design and build of all three improvements (API, AI service, web, tests, evaluation, docs, CI), built with AI assistance from Claude (see the README disclosure) |
-| Akriti Tigga | |
+| Akriti Tigga | Ran the whole API test suite on a real PostgreSQL 18.4 (102 passed, 0 failed), started the server on it and checked the Round 3 routes, the seeds and the audit chain, wrote a security review of the share links, uploads and brand isolation (docs/SECURITY_REVIEW.md), found that share-link tokens were being written to the request log, and fixed it with a regression test (PR #3) |
 | Gayathri VS | |
 | Sakshi Kumari | |
 | Shivam Agarwal | |
