@@ -41,11 +41,14 @@ Also fixed from Round 2: ClaimGuard false positives on "Limited time only" and "
 ## What does not work yet
 - ToneGuard on the live demo is rule-based basic mode (no paid model), so subtle voice problems are not caught.
 - VisualGuard misses rotated and partly cropped logos and reports a photographic background as off-palette; it recognises the brand's own logo files, not a general sense of "off-brand". The test images are synthetic and drawn from the same logo files, so real designs will score lower.
-- Other-brand detection does not catch wording that has no listed term, claim or name (0 of 3 voice-only samples).
+- Other-brand detection does not catch wording that has no listed term, claim or name (0 of 5 voice-only samples across both sets). ToneGuard's basic mode still misses idiomatic hype that is not in its word lists.
 - Drift needs about 7 weeks of history per team; mild or slow drifts are caught late or not at all (45% for a mild 1.6x step); the history is simulated and seeded, there is no real team data; the digest is created on first view each week.
 - No usability test with people outside the team and no screen-reader test (automated accessibility checks and keyboard-only runs were done).
 - The demo is shared: every visitor sees the same reviews, teams and brands. The free host sleeps when idle (the page says so and continues by itself; a free monitor pings it).
 - Email notifications are built but off; in-app notifications work.
+
+## Independent test data
+Written by Sakshi Kumari (PR #4) from the public seed guidelines, as she states before running the detectors. Results as printed, before any change: other-brand wording **18 of 20** planted samples (90%), **0 of 20** clean flagged (the planted claims and examples copy the other brand's sentences word for word, the easiest case); `heldout2` (30 texts): TermGuard 1.00/1.00, **ClaimGuard 0.50/0.17**, ToneGuard basic mode 0.80/0.57. The ClaimGuard result exposed that only keyword sentences were being examined; it now also examines effect, comparison, duration and completeness claims (0.86/1.00 on `heldout2`) and ToneGuard flags five more hype words (0.83/0.71). Those after-fix figures are not independent, because the fixes were written after the set was read; a fresh set is needed to confirm them. The real-image test set that was also requested has not been delivered.
 
 ## Changes from the plan, and why
 - VisualGuard uses classical image processing instead of CLIP embeddings: CLIP needs far more memory than the free 512 MB host and a model download. It costs nothing and runs in 1 to 2 seconds per image.
