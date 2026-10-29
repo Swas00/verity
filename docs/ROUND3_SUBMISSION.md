@@ -32,7 +32,7 @@ Also fixed from Round 2: ClaimGuard false positives on "Limited time only" and "
 
 ## Testing notes
 - **API:** 106 tests, 102 run by default (workflow, roles, validation, security headers, OpenAPI contract, multi-brand isolation, client links, drift, VisualGuard routes); the other 4 need Redis (3) or the real AI service (1, which runs in CI). `cd api && npm test`.
-- **AI service:** 127 tests, including colour, palette and logo checks on generated images, other-brand detection, and the VisualGuard acceptance test (held-out, about 2 minutes). `cd ai && .venv/bin/python -m pytest -q`.
+- **AI service:** 144 tests, including colour, palette and logo checks on generated images, other-brand detection, and the VisualGuard acceptance test (held-out, about 2 minutes). `cd ai && .venv/bin/python -m pytest -q`.
 - **Web:** 7 unit tests, lint, a production build, and browser suites run in real Chrome: the full journey, an accessibility audit (axe-core, WCAG 2.0/2.1 A and AA plus best practice, light and dark mode, 0 serious or critical violations), keyboard-only runs, narrow-screen checks (320 px), the sleeping-server simulation, multi-brand, drift, image reviews against the real AI service, the queue, and Round 3 keyboard use. All run in GitHub Actions on every push.
 - **Spec:** `docs/openapi.yaml` documents every route and a test fails if the code and the spec disagree; it is linted in CI.
 - **Evaluation sets:** text agents (30 + 30 annotated texts), contamination (39 texts), images (30 dev + 30 held-out + 20 stress), drift (simulated teams). Held-out and stress sets were not used to tune thresholds, except that the two ClaimGuard patterns fixed in Round 3 were known held-out errors.
@@ -60,7 +60,7 @@ Also fixed from Round 2: ClaimGuard false positives on "Limited time only" and "
 | Swastik Sahu | Project lead and integration; Round 3 design and build of all three improvements (API, AI service, web, tests, evaluation, docs, CI), built with AI assistance from Claude (see the README disclosure) |
 | Akriti Tigga | Ran the whole API test suite on a real PostgreSQL 18.4 (102 passed, 0 failed), started the server on it and checked the Round 3 routes, the seeds and the audit chain, wrote a security review of the share links, uploads and brand isolation (docs/SECURITY_REVIEW.md), found that share-link tokens were being written to the request log, and fixed it with a regression test (PR #3) |
 | Gayathri VS | |
-| Sakshi Kumari | |
+| Sakshi Kumari | Wrote an independent test set for the agents: 40 cross-brand texts (ai/eval/contamination_independent.json) and 30 fresh texts for the term, claim and tone agents (ai/eval/heldout2.json), and made the two evaluation scripts accept a named set (PR #4). Her results showed that ClaimGuard missed health, comparison and duration claims (recall 0.17), which was then fixed. The real-image test set that was also requested has not been delivered |
 | Shivam Agarwal | |
 
 Fill a row only from work that is merged in the repository. Rows from Round 2 (Gayathri: accessible reason dialog; Shivam: optional BullMQ and Redis queue, queue tests and CI jobs) are in the README team table.
