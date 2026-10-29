@@ -177,13 +177,13 @@ Changes from the plan written in Round 1 and Round 2, and why:
 | Name | Role in Round 1 | Round 2 contribution |
 |---|---|---|
 | Swastik Sahu | Full-Stack Lead & AI/ML Engineer | Project lead and integration: Next.js web app (review editor, queue, guideline builder, dashboard, audit trail), Node API (workflow, RBAC, hash-chained audit log, caching, streaming), AI agents and their evaluation, free deployment on Vercel, Render and Neon, CI, documentation, and review of teammates' pull requests. Built with AI assistance from Claude (see Disclosures) |
-| Akriti Tigga | Backend Engineer | |
+| Akriti Tigga | Backend Engineer | Ran the whole API test suite on a real PostgreSQL 18.4 (102 passed, 0 failed), started the server on it and checked the Round 3 routes, the seeds and the audit chain, wrote a security review of the share links, uploads and brand isolation (docs/SECURITY_REVIEW.md), found that share-link tokens were being written to the request log, and fixed it with a regression test (PR #3) |
 | Gayathri VS | Frontend Engineer & UI/UX Designer | Accessible reason dialog (focus handling, keyboard support, validation) replacing the browser's pop-ups in the review and queue pages, with end-to-end test updates |
 | Sakshi Kumari | AI / ML Engineer | |
 | Shivam Agarwal | Backend Engineer & DevOps | Optional BullMQ and Redis review queue (one job per agent, merged by the AI service), the single-agent and merge endpoints in the AI service, queue integration tests and a queue benchmark script, CI jobs that run the tests and the browser journey with and without Redis, and the matching documentation (PR #1) |
 
 
-*(Akriti Tigga's and Sakshi Kumari's contributions are added when their work is merged; a contribution is listed only if the repository shows it.)*
+*(Sakshi Kumari's contribution is added when her work is merged; a contribution is listed only if the repository shows it.)*
 
 Accessibility and usability: [docs/USABILITY.md](docs/USABILITY.md) (the usability test with outside participants has not been run yet)
 
