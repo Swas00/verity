@@ -33,7 +33,8 @@ def big_for(brand: str) -> dict:
 
 
 def main() -> None:
-    samples = json.loads((ROOT / "ai" / "eval" / "contamination.json").read_text())["samples"]
+    name = sys.argv[1] if len(sys.argv) > 1 else "contamination.json"
+    samples = json.loads((ROOT / "ai" / "eval" / name).read_text())["samples"]
     stats = {"planted": 0, "caught": 0, "clean": 0, "false": 0}
     by_kind: dict[str, list[int]] = {}
     misses, falses = [], []
