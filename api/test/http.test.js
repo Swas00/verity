@@ -38,13 +38,17 @@ test('one log line per request, with no token, body or query values', async () =
   await fetch(`${base}/me?secret=hunter2`, { headers: { authorization: `Bearer ${token}` } });
   await fetch(`${base}/public/report/public-share-secret?query=private`);
   await fetch(`${base}/PUBLIC/REPORT/public-share-secret/?query=private`);
+  await fetch(`${base}/public/report/public-share-secret/extra`);      // a token with something appended is still a token
+  await fetch(`${base}//public/report/public-share-secret`);
   await new Promise((r) => setTimeout(r, 20));
-  assert.equal(lines.length, 4);
+  assert.equal(lines.length, 6);
   const me = lines[1];
   assert.deepEqual(Object.keys(me).sort(), ['id', 'method', 'ms', 'path', 'status', 't', 'user']);
   assert.equal(me.method, 'GET'); assert.equal(me.path, '/me'); assert.equal(me.status, 200); assert.equal(me.user, 'u_maya');
   assert.equal(lines[2].path, '/public/report/[redacted]');
   assert.equal(lines[3].path, '/public/report/[redacted]');
+  assert.equal(lines[4].path, '/public/report/[redacted]');
+  assert.equal(lines[5].path, '/public/report/[redacted]');
   const text = JSON.stringify(lines);
   assert.ok(!text.includes(token) && !text.includes('hunter2') && !text.includes('creator"}') && !text.includes('public-share-secret') && !text.includes('private'));
 });
