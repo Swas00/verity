@@ -17,7 +17,7 @@ overlap = lambda a, b: a.lower() in b.lower() or b.lower() in a.lower()  # noqa:
 
 
 def run_set(name):
-    data = json.load(open(os.path.join(EVAL_DIR, SETS[name])))
+    data = json.load(open(os.path.join(EVAL_DIR, SETS.get(name, name + ".json"))))
     tp, fp, fn, modes = {}, {}, {}, set()
     for item in data:
         res = asyncio.run(review(item["text"], SAMPLE_BIG))
@@ -37,6 +37,6 @@ def run_set(name):
         print(f"{ag:<8}{(t / (t + f) if t + f else 1):>10.2f}{(t / (t + n) if t + n else 1):>8.2f}{t:>5}{f:>5}{n:>5}")
 
 
-chosen = [a for a in sys.argv[1:] if a in SETS] or list(SETS)
+chosen = sys.argv[1:] or list(SETS)
 for name in chosen:
     run_set(name)
