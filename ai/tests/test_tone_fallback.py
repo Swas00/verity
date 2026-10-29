@@ -67,3 +67,21 @@ def test_plain_warm_copy_is_not_flagged():
     for text in ["Our roasters taste every batch before it ships.", "Stop by on Saturday and tell us what you think.",
                  "We keep things simple: good beans, careful roasting."]:
         assert flags(text) == [], text
+
+
+# Round 3: more everyday hype words (written for the test, not taken from the independent evaluation set).
+import pytest as _pytest
+from app.agents import tone as _tone
+
+
+@_pytest.mark.parametrize("text", [
+    "A groundbreaking blend for the new season.",
+    "Our cutting-edge roaster arrived today.",
+    "A life-changing cup of tea.",
+    "This is a state-of-the-art brewing room.",
+    "A once-in-a-lifetime harvest.",
+])
+def test_more_hype_words_are_flagged_by_basic_mode(text):
+    findings = _tone.run(text, {"rules": []})
+    findings = findings[0] if isinstance(findings, tuple) else findings
+    assert findings, text
