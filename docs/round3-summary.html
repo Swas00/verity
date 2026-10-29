@@ -54,7 +54,7 @@ table{border-collapse:collapse;width:100%;margin:6pt 0;font-size:9.5pt}th,td{bor
 
 <h2>5. Testing notes</h2>
 <ul>
-<li><b>Automated:</b> 102 API tests run by default (4 more need Redis or the real AI service, and run in CI), 127 AI tests, 7 web unit tests, lint, build, and browser suites in real Chrome: full journey, accessibility audit (0 serious or critical violations), keyboard-only runs, 320 px reflow, sleeping server, multi-brand, drift, image reviews against the real AI service, queue, Round 3 keyboard use. All run in GitHub Actions on every push.</li>
+<li><b>Automated:</b> 102 API tests run by default (4 more need Redis or the real AI service, and run in CI), 144 AI tests, 7 web unit tests, lint, build, and browser suites in real Chrome: full journey, accessibility audit (0 serious or critical violations), keyboard-only runs, 320 px reflow, sleeping server, multi-brand, drift, image reviews against the real AI service, queue, Round 3 keyboard use. All run in GitHub Actions on every push.</li>
 <li><b>Evaluation sets:</b> text agents (30 + 30 texts), contamination (39 texts), images (30 dev + 30 held-out + 20 stress), drift (simulated teams). Thresholds were set on dev data. Held-out and stress sets were not used to tune, except that the two ClaimGuard patterns fixed in Round 3 were already-known held-out errors.</li>
 <li><b>Found by the new tests while building:</b> stale rows after switching brand; weeks starting on Thursday; images returned as JSON; a text charset added to image types; the 2 MB request limit; plain banners matched as a retired logo.</li></ul>
 
@@ -68,7 +68,7 @@ table{border-collapse:collapse;width:100%;margin:6pt 0;font-size:9.5pt}th,td{bor
 <ul>
 <li>ToneGuard on the demo is rule-based basic mode, so subtle voice problems are not caught.</li>
 <li>VisualGuard misses rotated and cropped logos and treats photographs as off-palette; it knows the brand's logo files, not "off-brand" in general. Test images are synthetic, so real designs will score lower.</li>
-<li>Other-brand detection does not catch wording with no listed term, claim or name.</li>
+<li>Other-brand detection does not catch wording with no listed term, claim or name. Independent test data written by a teammate showed ClaimGuard missing health, comparison and duration claims (recall 0.17); it was fixed afterwards, so the improved figure (0.86 / 1.00) is not independent and needs a fresh set. ToneGuard's basic mode still misses idiomatic hype.</li>
 <li>Drift needs about 7 weeks of history per team; mild drifts are often missed; the history is simulated and seeded.</li>
 <li>No usability test with outside people and no screen-reader test. The demo data is shared by every visitor. The free host sleeps when idle. Email is built but off.</li></ul>
 
@@ -77,7 +77,7 @@ table{border-collapse:collapse;width:100%;margin:6pt 0;font-size:9.5pt}th,td{bor
 <tr><td>Swastik Sahu</td><td>Full-Stack Lead and AI/ML Engineer</td><td>Project lead and integration; Round 3 design and build of all three improvements, tests, evaluation, documentation and CI.</td></tr>
 <tr><td>Akriti Tigga</td><td>Backend Engineer</td><td>Ran the whole API test suite on a real PostgreSQL 18.4 (102 passed, 0 failed), started the server on it and checked the Round 3 routes, the seeds and the audit chain, wrote a security review of the share links, uploads and brand isolation (docs/SECURITY_REVIEW.md), found that share-link tokens were being written to the request log, and fixed it with a regression test (PR #3).</td></tr>
 <tr><td>Gayathri VS</td><td>Frontend Engineer and UI/UX Designer</td><td>Round 2: accessible reason dialog with end-to-end test updates.</td></tr>
-<tr><td>Sakshi Kumari</td><td>AI / ML Engineer</td><td></td></tr>
+<tr><td>Sakshi Kumari</td><td>AI / ML Engineer</td><td>Wrote an independent test set for the agents: 40 cross-brand texts (ai/eval/contamination_independent.json) and 30 fresh texts for the term, claim and tone agents (ai/eval/heldout2.json), and made the two evaluation scripts accept a named set (PR #4). Her results showed that ClaimGuard missed health, comparison and duration claims (recall 0.17), which was then fixed. The real-image test set that was also requested has not been delivered.</td></tr>
 <tr><td>Shivam Agarwal</td><td>Backend Engineer and DevOps</td><td>Round 2: optional BullMQ and Redis queue, queue tests and benchmark, CI jobs with and without Redis.</td></tr></table>
 <p><b>AI assistance:</b> the team used Claude (Anthropic) while building, including Claude Code for writing and testing parts of the code, tests and documentation; the team directed and reviewed the work. <b>Licence:</b> MIT. <b>Demo data:</b> "Lumina Coffee Co.", "Northwind Tea Co." and every review, user, team and image are fictional.</p>
 </body></html>
