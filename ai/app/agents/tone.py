@@ -64,7 +64,7 @@ _ACRONYMS = {"USA", "USD", "FAQ", "FAQS", "NASA", "PDF", "HTML", "SEO", "CEO", "
 _JARGON = (r"(?:leverag(?:e|es|ed|ing)|synerg(?:y|ies|istic|ize|izing)|best-in-class|world-class|paradigm|holistic|actionable|"
            r"seamless(?:ly)?|cutting-edge|next-level|disrupt\w*|ecosystem|value-add)")
 _HYPE = (r"(?:revolution(?:ary|ize|ise|izing|ising)?|game-?chang\w+|unbeatable|unparalleled|unrival+ed|mind-blowing|incredible|amazing|"
-         r"ultimate|second to none)")
+         r"ultimate|second to none|once-in-a-lifetime|groundbreaking|life-?changing|cutting-edge|state-of-the-art)")
 # Broader corporate-speak idioms are weaker evidence, so they are reported below the 0.6 cutoff: shown, but advisory.
 _SOFT = r"(?:empower(?:s|ed|ing|ment)?|redefin(?:e|es|ed|ing)|(?:thrilled|delighted|proud|excited) to (?:announce|unveil|introduce))"
 _PRESSURE = (r"(?:act now|don['\u2019]t miss out|limited time(?: only)?|last chance|hurry|while supplies last|before it['\u2019]s too late|"
