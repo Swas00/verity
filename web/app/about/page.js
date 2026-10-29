@@ -69,7 +69,7 @@ const ROUND3 = [
 ];
 
 const FIXES = [
-  ['ClaimGuard false positives', '\u201cLimited time only\u201d is no longer a claim, \u201cthe only roaster\u201d still is; \u201cbest-in-class\u201d is left to ToneGuard, \u201cthe best coffee\u201d still is a claim. Dev precision 0.90 to 1.00; held-out 0.75 to 0.86 (those two held-out errors were known when the rule was written).'],
+  ['ClaimGuard', '\u201cLimited time only\u201d is no longer a claim and \u201cthe only roaster\u201d still is; \u201cbest-in-class\u201d is left to ToneGuard. Independent test data from a teammate then showed that ClaimGuard only examined keyword sentences and missed health, comparison and duration claims (recall 0.17 on her set); it now examines those too (0.86 / 1.00, a figure that is not independent because the fix was written after reading the set).'],
   ['Upload size limit', 'The API rejected request bodies over 2 MB although guideline files of up to 5 MB are documented. Upload routes now accept the sizes they document.'],
   ['Large review lists', 'The queue loaded every review at once. It now loads 25 at a time, searches titles, and keeps loaded pages after an action.'],
   ['No way to share a result', 'Managers can send a client a read-only report link.'],
