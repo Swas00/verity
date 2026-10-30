@@ -117,6 +117,7 @@ cd web && npm run visual      # image reviews against the real AI service, brand
 cd web && npm run keyboard3   # keyboard-only: image review boxes and dispute dialog, drift chart tables
 cd web && npm run theme       # dark by default, the Dark / Light / System toggle: memory, no flash, accessibility
 cd web && npm run queue       # paged and searchable queue
+cd web && npm run smoke       # whole-site sweep: console errors, failed requests, overflow, the main button on short laptops, links, both themes
 cd ai  && .venv/bin/python scripts/eval.py  # precision / recall on the dev and held-out text sets (30 texts each)
 cd ai  && .venv/bin/python scripts/calibrate.py  # stated confidence vs measured precision
 cd ai  && .venv/bin/python scripts/contamination_eval.py  # other-brand detection on 39 texts
