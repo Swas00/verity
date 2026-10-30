@@ -18,9 +18,9 @@
 # Round 3 submission checklist
 
 1. [ ] **Final working link** opens in a private window with no signup: https://verity-two-delta.vercel.app. Run `docs/QA_SCRIPT.md` (the Judge path, the Round 3 path and the idle cold-start check) on it.
-2. [ ] **Source-code repository** is public and `main` contains the Round 3 work (the work is on branch `round3` until it is merged): https://github.com/Swas00/verity
+2. [ ] **Source-code repository** is public and `main` contains all the Round 3 work (it was merged and pushed; the `round3` branch is only a backup): https://github.com/Swas00/verity
 3. [ ] **Updated project PDF** `docs/Verity_Round3_Project.pdf` uploaded to Drive, "Anyone with the link" as Viewer, opened in a private window.
 4. [ ] **Completed-improvements list, technical details, testing notes, team contributions:** paste from `docs/ROUND3_SUBMISSION.md`.
-5. [ ] **Team contributions:** Akriti Tigga's and Sakshi Kumari's rows are blank. Fill a row only from work merged in the repository, or with a description the team member confirms.
+5. [ ] **Team contributions:** all five rows now come from merged work (Akriti: real-PostgreSQL run and security review, PR #3; Sakshi: independent test data, PR #4; Gayathri and Shivam: Round 2 pull requests; Swastik: the rest). Sakshi's row says plainly that the real-image test set was not delivered. Re-read the README table once before submitting.
 6. [ ] **Demo video** (if the form asks for one): `docs/DEMO_SCRIPT.md`, Round 3 version.
 7. [ ] Re-read the official Round 3 form for fields not covered here.
