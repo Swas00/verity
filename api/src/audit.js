@@ -17,17 +17,20 @@ export async function audit(db, { brandId, reviewId = null, actor, action, detai
   }
 }
 
-// Recomputes every hash; returns the first broken row (or null).
+// Recomputes every hash and returns the first broken row. One query does the whole check inside the database (each row's
+// hash is recomputed from the stored hash of the row before it), because asking the database one question per row took
+// over two minutes for 750 entries on a hosted database.
 export async function verifyChain(db, brandId) {
-  const rows = await db.query(
-    `SELECT id, brand_id, review_id, actor_id, action, detail, ts, prev_hash, hash FROM audit_log WHERE brand_id=$1 ORDER BY id`, [brandId]);
-  let prev = 'genesis';
-  for (const r of rows) {
-    const [{ h }] = await db.query(
-      `SELECT encode(sha256(convert_to($1 || '|' || $2 || '|' || coalesce($3,'') || '|' || coalesce($4::text,'') || '|' || $5::jsonb::text || '|' || $6, 'utf8')), 'hex') AS h`,
-      [prev, r.action, r.actor_id, r.review_id, JSON.stringify(r.detail), r.ts]);
-    if (r.prev_hash !== prev || r.hash !== h) return { ok: false, brokenAt: r.id, checked: rows.length };
-    prev = r.hash;
-  }
-  return { ok: true, checked: rows.length };
+  const [{ n }] = await db.query('SELECT count(*)::int AS n FROM audit_log WHERE brand_id=$1', [brandId]);
+  const [bad] = await db.query(
+    `WITH chain AS (
+       SELECT id, action, actor_id, review_id, detail, ts, prev_hash, hash,
+              coalesce(lag(hash) OVER (ORDER BY id), 'genesis') AS expected_prev
+         FROM audit_log WHERE brand_id=$1)
+     SELECT id FROM chain
+      WHERE prev_hash <> expected_prev
+         OR hash <> encode(sha256(convert_to(expected_prev || '|' || action || '|' || coalesce(actor_id,'') || '|' ||
+              coalesce(review_id::text,'') || '|' || detail::text || '|' || ts, 'utf8')), 'hex')
+      ORDER BY id LIMIT 1`, [brandId]);
+  return bad ? { ok: false, brokenAt: bad.id, checked: n } : { ok: true, checked: n };
 }
