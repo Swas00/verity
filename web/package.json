@@ -17,7 +17,8 @@
     "visual": "node e2e/visual.mjs",
     "queue": "node e2e/queue.mjs",
     "keyboard3": "node e2e/keyboard3.mjs",
-    "theme": "node e2e/theme.mjs"
+    "theme": "node e2e/theme.mjs",
+    "smoke": "node e2e/smoke.mjs"
   },
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",
