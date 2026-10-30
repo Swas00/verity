@@ -105,7 +105,7 @@ jobs:
           wait_url http://127.0.0.1:8000/health
           wait_url http://127.0.0.1:4000/health
           wait_url http://127.0.0.1:3000
-          cd web && npm run e2e && npm run a11y && npm run keyboard && npm run waking && npm run multibrand && npm run drift && npm run visual && npm run keyboard3 && npm run theme && npm run queue
+          cd web && npm run e2e && npm run a11y && npm run keyboard && npm run waking && npm run multibrand && npm run drift && npm run visual && npm run keyboard3 && npm run theme && npm run queue && npm run smoke
           cd ..
           kill "$API_PID"
           wait "$API_PID" || true
