@@ -17,7 +17,7 @@ info:
 servers:
   - url: http://localhost:4000
     description: Local development
-  - url: https://verity-api-f0xo.onrender.com
+  - url: https://verity-08fi.onrender.com
     description: Hosted demo (free tier; the first request after a pause takes about 30 seconds)
 
 tags:
