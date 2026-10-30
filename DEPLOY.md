@@ -39,6 +39,22 @@ Open the Vercel URL: both badges show `up`, **Start judge walkthrough** opens th
 - **Memory.** The free web service has 512 MB. The API, the AI service and one image check at a time fit: analysing a large image peaked at about 210 MB for the Python process on a laptop (images are shrunk to 1200 px first). If the service is restarted for lack of memory, lower `WORK_LONG_SIDE` in `ai/app/visual/agent.py`.
 - The Docker image now installs Pillow, NumPy and OpenCV (headless) from `ai/requirements.txt`; the first build takes longer.
 
+## Fallback if the Render service is suspended (untested here)
+If Render suspends the free service and you cannot resume it, the same Docker image can run on a Hugging Face **Space**, which is free and needs no card. This has not been tried from this repository, so check each step.
+1. Create a Space at huggingface.co/new-space: SDK **Docker**, template **Blank**, visibility **Public**.
+2. In the Space's Settings, add Variables and Secrets: `PORT=7860`, `WEB_ORIGIN` (the exact Vercel URL, no trailing slash), `JWT_SECRET` (any long random string), `DATABASE_URL` (the Neon connection string) and `PGSSL=1`.
+3. Put the repository in the Space. In a **copy** of the repo (so GitHub's README is not changed), add this front matter at the very top of `README.md`, commit, and push that copy to the Space's git address (Hugging Face asks for your access token in the terminal; never paste it into chat or into a file):
+   ```
+   ---
+   title: Verity API
+   sdk: docker
+   app_port: 7860
+   ---
+   ```
+4. When the Space shows Running, open `https://<your-user>-<space-name>.hf.space/health/deep`: both services should be `up`.
+5. In Vercel, set `NEXT_PUBLIC_API_URL` to that address and redeploy the web app (it is baked in at build time). Update the links in the README and the submission text.
+Spaces also sleep when idle, so the landing page's "Waking up the server" message still applies.
+
 ## Optional: Anthropic key
 Without `ANTHROPIC_API_KEY` and `MODEL_FAST`, ToneGuard runs in labelled basic mode and costs nothing. If you add a key, set a spend cap in the Anthropic console first.
 
