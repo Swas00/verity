@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --watch src/index.js",
     "start": "node src/index.js",
-    "test": "node --test test/rbac.test.js test/validation.test.js test/http.test.js test/openapi.test.js test/multibrand.test.js test/share.test.js test/drift.test.js test/drift-api.test.js test/visual.test.js test/visual-real.test.js test/workflow.test.js test/round2.test.js test/queue.test.js test/queue-fallback.test.js",
+    "test": "node --test test/rbac.test.js test/validation.test.js test/http.test.js test/openapi.test.js test/multibrand.test.js test/share.test.js test/drift.test.js test/drift-api.test.js test/audit-verify.test.js test/visual.test.js test/visual-real.test.js test/workflow.test.js test/round2.test.js test/queue.test.js test/queue-fallback.test.js",
     "test:queue": "node --test test/queue.test.js test/queue-fallback.test.js",
     "benchmark:queue": "node scripts/benchmark-queue.js",
     "bulk-seed": "node scripts/bulk-seed.js",
